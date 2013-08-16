@@ -1,6 +1,19 @@
-#templatepagename Plugin for DokuWiki
+#TemplatePagename Plugin for DokuWiki
 
-Set a default template page name
+Let you configure self the wikipage which is used as template for the new 
+created pages in the namespace.
+
+Some configuration examples
+ * the plugin defaults are: `c_template` and `i_template` (editable by who has write permission)
+ * or DokuWiki defaults are: `_template` and `__template` (only editable via filesystem)
+ * or use simple `template` 
+ * it is now up to your choice.
+
+Be aware, when the template name starts with characters like `_` it is not 
+editable online in the wiki, only by server admins via the file system.
+When you follow the [page name conventions](https://www.dokuwiki.org/pagename) people who has write permission on it
+may modify the page.
+
 
 All documentation for this plugin can be found at
 http://dokuwiki.org
@@ -9,7 +22,7 @@ If you install this plugin manually, make sure it is installed in
 lib/plugins/templatepagename/ - if the folder is called different it
 will not work!
 
-Please refer to http://www.dokuwiki.org/plugin:templatepagename for additional info
+Please refer to https://www.dokuwiki.org/plugin:templatepagename for additional info
 on how to install plugins in DokuWiki.
 
 ----
