@@ -16,13 +16,13 @@ may modify the page.
 
 
 All documentation for this plugin can be found at
-http://dokuwiki.org
+https://www.dokuwiki.org/plugin:templatepagename
 
 If you install this plugin manually, make sure it is installed in
 lib/plugins/templatepagename/ - if the folder is called different it
 will not work!
 
-Please refer to https://www.dokuwiki.org/plugin:templatepagename for additional info
+Please refer to https://www.dokuwiki.org/plugins for additional info
 on how to install plugins in DokuWiki.
 
 ----
