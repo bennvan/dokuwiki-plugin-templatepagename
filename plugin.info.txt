@@ -4,4 +4,4 @@ email  klapinklapin@gmail.com
 date   2013-08-16
 name   templatepagename plugin
 desc   Set a default template page name
-url    https://dokuwiki.org/plugin:templatename
+url    https://dokuwiki.org/plugin:templatepagename
