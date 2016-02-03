@@ -11,7 +11,7 @@ if (!defined('DOKU_INC')) die();
 
 class action_plugin_templatepagename_TemplatePageName extends DokuWiki_Action_Plugin {
 
-    public function register(Doku_Event_Handler &$controller) {
+    public function register(Doku_Event_Handler $controller) {
 
        $controller->register_hook('COMMON_PAGETPL_LOAD', 'BEFORE', $this, 'handle_common_pagetpl_load');
    
