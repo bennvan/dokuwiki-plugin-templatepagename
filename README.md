@@ -1,13 +1,41 @@
-#TemplatePagename Plugin for DokuWiki
+# TemplatePagename Plugin for DokuWiki (ammelab)
 
-Let you configure self the wikipage which is used as template for the new 
-created pages in the namespace.
+Plugin to set the prefix of templates in dokuwiki. 
 
-Some configuration examples
- * the plugin defaults are: `c_template` and `i_template` (editable by who has write permission)
- * or DokuWiki defaults are: `_template` and `__template` (only editable via filesystem)
- * or use simple `template` 
- * it is now up to your choice.
+The plugin default prefixes are:
+ * `c_` : Templates for current namespace
+ * `i_` : Templates for namespace one level below
+ * `ii_`: Templates for namespace any level below
+
+Following the prefix you may use any name, or the default `template` name.
+
+## Template search order
+
+ * Searching begins in current namespace, working back to the root namespace until a match is found. 
+ * When searching for a template, templates of the same name are considered before the generic `template` name.
+
+### Example
+
+Say a template exists `:foo:bar:i_sidebar`, and a new page is created `:foo:bar:baz:sidebar`.
+
+The following searches will take place loading the new page editor:
+
+ * `:foo:bar:baz:c_sidebar`
+ * `:foo:bar:baz:c_template`
+ * `:foo:bar:baz:i_sidebar`
+ * `:foo:bar:baz:i_template`
+ * `:foo:bar:baz:ii_sidebar`
+ * `:foo:bar:baz:ii_template`
+ * `:foo:bar:i_sidebar` (match) -> returns template to editor
+ * `:foo:bar:i_template`
+ * `:foo:bar:ii_sidebar`
+ * `:foo:bar:ii_template`
+ * `:foo:ii_sidebar`
+ * `:foo:ii_template`
+ * `:ii_sidebar`
+ * `:ii_template`
+
+
 
 Be aware, when the template name starts with characters like `_` it is not 
 editable online in the wiki, only by server admins via the file system.
@@ -27,6 +55,7 @@ on how to install plugins in DokuWiki.
 
 ----
 Copyright (C) Martin <martin@sound4.biz>
+Copyright (C) Ben <ben.vanmagill16@gmail.com>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
