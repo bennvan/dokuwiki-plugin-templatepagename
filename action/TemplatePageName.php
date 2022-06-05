@@ -37,23 +37,23 @@ class action_plugin_templatepagename_TemplatePageName extends dokuwiki\Extension
         // Dont run if tplfile already exists
         if(!empty($event->data['tplfile'])) return;
 
-        $c_  = $this->getConf('current_pagename_prefix');
-        $i_  = $this->getConf('first_inherited_pagename_prefix');
-        $ii_ = $this->getConf('any_inherited_pagename_prefix');
-
         $path    = dirname(wikiFN($event->data['id']));
         $current = noNS($event->data['id']);
         $len     = strlen(rtrim($conf['datadir'], '/'));
 
         // Search 
-        $search_order = [$c_, $i_ , $ii_];
+        $search_order = array(
+            $this->getConf('current_pagename_prefix'),
+            $this->getConf('first_inherited_pagename_prefix'),
+            $this->getConf('any_inherited_pagename_prefix')
+        );
         $search_len   = count($search_order)-1;
 
         $shift  = 0; // Shift for search order. First search directory for presence of any template, then one level above, or any levels above.
         while(strlen($path) >= $len) {
             if ($shift>$search_len) $shift = $search_len; //Keep final shift on any level namespace
 
-            // Will only iterate though full search order once (current namespace). Returns on first match.
+            // Will only iterate through full search order once (current namespace). Returns on first match.
             for ($i = $shift; $i<=$search_len; $i++) {
                 $prefix = $search_order[$i];
 
