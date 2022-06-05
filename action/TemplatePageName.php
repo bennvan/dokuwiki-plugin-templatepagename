@@ -4,15 +4,13 @@
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Martin <martin@sound4.biz>
+ * @author  Ben van Magill <ben.vanmagill16@gmail.com>
  */
-
-// must be run within Dokuwiki
-if(!defined('DOKU_INC')) die();
 
 /**
  * Class action_plugin_templatepagename_TemplatePageName
  */
-class action_plugin_templatepagename_TemplatePageName extends DokuWiki_Action_Plugin {
+class action_plugin_templatepagename_TemplatePageName extends dokuwiki\Extension\ActionPlugin {
 
     /**
      * Registers a callback function for a given event
@@ -20,9 +18,7 @@ class action_plugin_templatepagename_TemplatePageName extends DokuWiki_Action_Pl
      * @param Doku_Event_Handler $controller
      */
     public function register(Doku_Event_Handler $controller) {
-
         $controller->register_hook('COMMON_PAGETPL_LOAD', 'BEFORE', $this, 'handle_common_pagetpl_load');
-
     }
 
     /**
@@ -38,23 +34,41 @@ class action_plugin_templatepagename_TemplatePageName extends DokuWiki_Action_Pl
         // function (core dokuwiki) but vars name are adjusted to be used
         // within the plugin.
 
-        $c_pagename = $this->getConf('current_pagename_tpl');
-        $i_pagename = $this->getConf('inherited_pagename_tpl');
+        // Dont run if tplfile already exists
+        if(!empty($event->data['tplfile'])) return;
 
-        $path = dirname(wikiFN($event->data['id']));
+        $c_  = $this->getConf('current_pagename_prefix');
+        $i_  = $this->getConf('first_inherited_pagename_prefix');
+        $ii_ = $this->getConf('any_inherited_pagename_prefix');
 
-        if(@file_exists($path . '/' . $c_pagename . '.txt')) {
-            $event->data['tplfile'] = $path . '/' . $c_pagename . '.txt';
-        } else {
-            // search upper namespaces for templates
-            $len = strlen(rtrim($conf['datadir'], '/'));
-            while(strlen($path) >= $len) {
-                if(@file_exists($path . '/' . $i_pagename . '.txt')) {
-                    $event->data['tplfile'] = $path . '/' . $i_pagename . '.txt';
-                    break;
+        $path    = dirname(wikiFN($event->data['id']));
+        $current = noNS($event->data['id']);
+        $len     = strlen(rtrim($conf['datadir'], '/'));
+
+        // Search 
+        $search_order = [$c_, $i_ , $ii_];
+        $search_len   = count($search_order)-1;
+
+        $shift  = 0; // Shift for search order. First search directory for presence of any template, then one level above, or any levels above.
+        while(strlen($path) >= $len) {
+            if ($shift>$search_len) $shift = $search_len; //Keep final shift on any level namespace
+
+            // Will only iterate though full search order once (current namespace). Returns on first match.
+            for ($i = $shift; $i<=$search_len; $i++) {
+                $prefix = $search_order[$i];
+
+                // Search for templates with same name before generic template.txt
+                if(@file_exists($path . '/' . $prefix . $current . '.txt')) {
+                    $event->data['tplfile'] = $path . '/' . $prefix . $current . '.txt';
+                    return;
                 }
-                $path = substr($path, 0, strrpos($path, '/'));
+                if(@file_exists($path . '/' . $prefix . 'template.txt')) {
+                    $event->data['tplfile'] = $path . '/' . $prefix .'template.txt';
+                    return;
+                } 
             }
+            $path = substr($path, 0, strrpos($path, '/'));
+            $shift++;
         }
     }
 

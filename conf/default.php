@@ -5,5 +5,6 @@
  * @author Martin <martin@sound4.biz>
  */
 
-$conf['current_pagename_tpl']    = 'c_template';
-$conf['inherited_pagename_tpl']    = 'i_template';
+$conf['current_pagename_prefix']    = 'c_';
+$conf['first_inherited_pagename_prefix']    = 'i_';
+$conf['any_inherited_pagename_prefix']    = 'ii_';

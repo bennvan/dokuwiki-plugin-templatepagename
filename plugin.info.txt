@@ -1,7 +1,7 @@
 base   templatepagename
 author Gerrit Uitslag (previous: Martin)
 email  klapinklapin@gmail.com
-date   2016-08-24
+date   2022-06-06
 name   templatepagename plugin
-desc   Set a default template page name
+desc   Set default template page names
 url    https://dokuwiki.org/plugin:templatepagename

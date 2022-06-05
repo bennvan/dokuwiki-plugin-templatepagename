@@ -6,6 +6,7 @@
  */
 
 
-$meta['current_pagename_tpl'] = array('string');
-$meta['inherited_pagename_tpl'] = array('string');
+$meta['current_pagename_prefix'] = array('string');
+$meta['first_inherited_pagename_prefix'] = array('string');
+$meta['any_inherited_pagename_prefix'] = array('string');
 
