@@ -1,4 +1,4 @@
-# TemplatePagename Plugin for DokuWiki (ammelab)
+# TemplatePagename Plugin for DokuWiki
 
 Plugin to set the prefix of templates in dokuwiki. 
 
